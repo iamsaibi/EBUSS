@@ -1,22 +1,8 @@
 # %%
-"""
-# sentiment-based product recommendation system: 
-
-    Performed following tasks:
-    1.Data sourcing and sentiment analysis
-    2.Building a recommendation system
-    3.Recommending top 5 products
-    4.Deploying the end-to-end project with a user interface
-
-"""
-
-# %%
 # Importing libraries
 import numpy as np
 import pandas as pd
-import random
 import pickle
-import pylab
 from numpy import *
 
 

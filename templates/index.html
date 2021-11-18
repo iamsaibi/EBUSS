@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ebuss Recommendation System</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap 4 Autocomplete -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.min.js"
+        crossorigin="anonymous"></script>
+
+    <style>
+        .label,
+        h2 {
+            color: white;
+            padding: 10px;
+
+
+        }
+
+        #product-ul li{
+            color: white;
+        }
+
+        .container {
+            background-color: #06087eea;
+        }
+
+        .username,
+        li {
+            color: #06087eea;
+        }
+
+    </style>
+   
+
+</head>
+
+<body style="background-color:#06087eea">
+    <div style="text-align: center;">
+        <h2> Welcome to Sentiment Based Product Recommendation System</h2>
+
+    </div>
+
+    <div class="" style="margin:30px; margin-left: 30vw; margin-right: 30vw;">
+        <p class="label">Recommended 5 products based on the entered user name will appear here :</p>
+        <div class="jumbotron">
+            <div class="form-row mb-3">
+                <div class="col-lg-2">
+                    <span class="username"> User Name</span>
+                </div>
+                <div class="col-lg-4">
+                    <input id="input_username" class="form-control basic" type="text" autocomplete="off">
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" id="search"
+                        class="btn btn-block btn-outline-secondary basicAutoCompleteShowBtn">
+                        Submit
+                    </button>
+                </div>
+                <div class="col-lg-4">
+                </div>
+                <div hidden class="col-lg-12 alert alert-danger">
+                  Something went wrong
+                </div>
+                <div class="col-lg-12">
+                    <p class="username"> Some ids to pick:
+                    <ul>
+                        <li>raeanne</li>
+                        <li>kimmie</li>
+                        <li>cassie</li>
+                        <li>moore222</li>
+                        <li>jds1992</li>
+                        <li>bre234</li>
+                        <li>gordy313</li>
+                        <li>nicole</li>
+                        <li>cvperez</li>
+                        <li>beccagrl532</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div id="tabshow" class="invisible row">
+            <div class="form-row mb-3">
+                <div>
+                    <ul id="product-ul">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('#search').click(function () {
+                user = $('.basic').val();
+                if (user != '') {
+                    $.ajax({
+                        url: '/predict/' + user,
+                        type: 'GET',
+                        success: function (result) {
+                            $('#product-ul').empty()
+                            $("#tabshow").removeClass("invisible")
+                            $(function () {
+                                $.each(result.p, function (i, item) {
+                                    var li= $('<li>').text(item)
+                                    $('#product-ul').append(li)
+                                });
+                            });
+                        },
+                        error: function(result){
+                            $('.alert-danger').removeAttr('hidden')
+                        }  
+                    });
+                }
+            });
+        </script>
+</body>
+
+</html>
